@@ -1,0 +1,669 @@
+/* Global Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Header Styles */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+#main-heading {
+  margin: 0;
+  padding: 0 20px;
+}
+
+#header-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 20px;
+}
+
+#nav-items {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+#logout-button {
+  background-color: white;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 1px;
+  margin: 10px;
+  font-weight: 900;
+ 
+  
+}
+
+#logout-button:hover {
+  background-color: #d32f2f;
+}
+
+/* User Styles */
+
+.user-details {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  color:black;
+}
+
+.read-more{
+  background-color: black;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
+  
+}
+
+.read-more:hover {
+  background-color: #45a049;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding-top: 60px;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Slideshow Styles */
+.photo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-container {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide-container img {
+  width: 100%;
+  height: auto;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border: none;
+  outline: none;
+  z-index: 1;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+/* Preloader Styles */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: preloader-spin 1s linear infinite;
+}
+
+@keyframes preloader-spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure preloader is displayed above other elements */
+  color: black;
+}
+
+/* Add loader animation (example using spinner) */
+.preloader:before {
+  content: "";
+  display: block;
+  margin: 80px auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 10px solid #fff;
+  border-top-color: transparent; /* Creates a spinning effect */
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* User Container */
+.user-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
+  justify-content: space-between; /* Distribute items evenly */
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+/* User Information */
+.user-info {
+  /* background-color: rgb(36, 32, 32); */
+  color: black;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+
+.user-info p {
+  margin-bottom: 5px;
+  color: black;
+  font-size: 20px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  
+  text-align: center;
+  text-decoration: none;
+  
+  
+}
+
+/* Photo Container */
+#photo-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow photos to wrap onto multiple lines */
+  margin-top: 10px;
+}
+
+.user-photo {
+  width: 100px; /* Set width for each photo */
+  height: 100px; /* Set height for each photo */
+  margin: 5px;
+  object-fit: cover; /* Maintain aspect ratio and fill the space */
+}
+
+
+/* Navigation */
+nav {
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}
+
+/* Buttons */
+
+
+#nav-items {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  padding: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  font-weight: 900;
+  background-color: black;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+#logout-button{
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.photo-container {
+  position: relative;
+  max-width: 300px;
+  /* Adjust maximum width as needed */
+  margin: auto;
+  overflow: hidden;
+}
+
+.photo-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+  /* Add transition for smooth slide effect */
+}
+
+
+
+
+#main-heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+
+
+.read-more {
+  display: block;
+  margin: 0 auto ;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 560;
+  
+
+}
+.read-more:hover{
+  background-color: black;
+  color: white;
+  border: 0px;
+  transition: 0.3s ease-in-out;
+}
+.user-details{
+  color: red;
+
+}
+
+
+
+.photo-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  /* Adjust height as needed */
+}
+
+
+.slide-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide-container img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  /* Add cursor pointer for clickable images */
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 100;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+/* Style for the modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 800px;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Add CSS styles for photo slideshow */
+.user-info {
+  display: inline-block;
+  /* Display user info containers as inline blocks */
+  width: calc(33.33% - 20px);
+  /* Set width to one-third of the container with margins */
+  margin: 10px;
+  /* Add margin between containers */
+  vertical-align: top;
+  /* Align containers to the top of the row */
+  box-sizing: border-box;
+  /* Include padding and borders in the width */
+}
+
+.photo-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  /* Adjust height as needed */
+}
+
+.slide-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide-container img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  /* Add cursor pointer for clickable images */
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 100;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+/* Style for the modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 800px;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+ 
+
+/*responsive design */
+@media (max-width: 768px) {
+  #header-container {
+        flex-direction: column;
+        /* Stack elements vertically */
+  }
+
+  .user-info {
+        width: 100%;
+        /* Make user info cards full width */
+  }
+
+
+
+
+
+
+}
+
+
+
+
+/* Reset styles for consistent behavior across browsers */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navigation bar styles */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+a, button {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  background-color: #333; /* Adjust color as needed */
+  cursor: pointer;
+}
+
+a:hover, button:hover {
+  background-color: #4CAF50; /* Adjust hover color as needed */
+}
+
+/* Hamburger menu button styles */
+#menu-button {
+  display: none; /* Initially hidden on larger screens */
+  background-color: transparent;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: #fff; /* Adjust bar color as needed */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Styling for responsive behavior (media query) */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+
+  /* Make navigation links stack vertically on smaller screens */
+  nav {
+    flex-direction: column;
+  }
+
+  a {
+    margin-bottom: 10px;
+    width: 100%; /* Make links full width on smaller screens */
+  }
+
+  /* Show hamburger button on smaller screens */
+  #menu-button {
+    display: block;
+  }
+
+  /* Animate hamburger menu bars on click */
+  nav.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  nav.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  nav.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

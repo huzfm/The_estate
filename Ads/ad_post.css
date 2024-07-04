@@ -1,0 +1,284 @@
+/* style.css */
+
+
+.bg-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1; /* Set a lower z-index to place behind video */
+  }
+  .bg-image {
+    background-image: url("../Assets/Images/1.jpg"); /* Replace with your image path */
+    background-size: cover; /* Stretch image to cover the entire container */
+    background-position: center; /* Center the image */
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Styles for video  */
+  .video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1; /* Set a higher z-index to place on top of image */
+  }
+  .video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover; /* Stretch video to fill container */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      /* background-color: #f0f0f0; */
+      overflow: hidden;
+    
+  }
+  
+  .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
+  
+  .form {
+      background-color: transparent;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+  }
+  
+  .form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+  }
+  
+  .inputbox {
+      position: relative;
+      margin-bottom: 20px;
+  }
+  
+  .inputbox input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+  
+  .inputbox span {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #888;
+      transition: 0.3s;
+  }
+  
+  .inputbox input:focus + span,
+  .inputbox input:valid + span {
+      top: -10px;
+      left: 5px;
+      font-size: 12px;
+      color: #333;
+  }
+  
+  .sub {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      /* color: #fff; */
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .sub:hover {
+      background-color: #0056b3;
+  }
+  
+  #error-message {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+  }
+#heading{
+    color: black;
+    font-weight: 1000;
+    font-style: italic;
+    text-decoration: dashed;
+    
+}
+  .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
+  
+  .form {
+      background-color: transparent;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+  }
+  
+  h2 {
+      margin-top: 0;
+      color: black;
+      text-decoration: dashed;
+
+  }
+  
+  .inputbox {
+      margin-bottom: 15px;
+  }
+  
+  .inputbox input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: transparent;
+      text-align: center;
+      font-weight: 800;
+  }
+  ::placeholder{
+    color: black;
+    font-weight: 600;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    
+  }
+  
+  .inputbox span {
+      color: #777;
+      font-size: 12px;
+  }
+  
+  .sub {
+      background-color: grey;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 600;
+  }
+  
+  
+  .sub:hover {
+      background-color: black;
+      color: white;
+     
+  }
+  
+  #error-message {
+      color: red;
+      margin-top: 10px;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+      .form {
+          padding: 10px;
+      }
+  
+      .inputbox input {
+          padding: 8px;
+      }
+  
+      .sub {
+          padding: 8px 16px;
+      }
+  }
+  #loader {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+#loader::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid #3498db;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+          transform: rotate(0deg);
+    }
+
+    100% {
+          transform: rotate(360deg);
+    }
+}  
+
+#header{
+    width: 400px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size:40px;
+    
+
+}
+#buy{
+    position: fixed; /* Fix the button to the viewport */
+    top: 10px; /* Adjust the top position from the edge */
+    right: 30px; /* Adjust the right position from the edge */
+    font-size: 30px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(39, 38, 38);
+    padding: 10px;
+
+    
+}
+.box{
+    position: relative;
+    top: -100px;
+}
+body{
+    overflow: hidden;
+    
+}

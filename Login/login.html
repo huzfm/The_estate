@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register & Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+  <script src="script.js"></script>
+  <style>
+
+  </style>
+  <script type="module" src="firebaseauth.js"></script>
+</head>
+
+<body>
+  <div class="container" id="signup" style="display:none;">
+    <h1 class="form-title">Register</h1>
+    <!-- Loader for registration -->
+    <div id="signupLoader" class="loader"></div>
+    <form method="post" action="">
+      <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="fName" placeholder="First Name*" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="lName" placeholder="Last Name*" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="rEmail" placeholder="Email*" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="rPassword" placeholder="Password*" required>
+        <i class="fas fa-eye toggle-password" id="toggleRPassword"></i>
+      </div>
+      <button class="btn" id="submitSignUp">Sign Up</button>
+    </form>
+    <div class="links">
+      <p>Already Have Account?</p>
+      <button id="signInButton">Sign In</button>
+
+    </div>
+    <br>
+    <p>(*) Mandotary fields</p>
+    <p>Password must be greater than 6 characters</p>
+  </div>
+
+  <div class="container" id="signIn">
+    <h1 class="form-title">Login</h1>
+    <!-- Loader for login -->
+    <div id="signInLoader" class="loader"></div>
+    <form method="post" action="">
+      <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required>
+        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+      </div>
+      <button class="btn" id="submitSignIn">Sign In</button>
+    </form>
+    <div class="links">
+      <p>Don't have an account yet?</p>
+      <button id="signUpButton">Sign Up</button>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

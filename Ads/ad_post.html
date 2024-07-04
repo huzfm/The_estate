@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Your Ad</title>
+    <link rel="stylesheet" href="ad_post.css">
+    <style>
+        #buy-btn{
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+        }   
+        #buy{
+            z-index: 1;
+        }
+         </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <!-- Navigation and Buy button -->
+            <div id="buy">
+                <a href="./fetchDB.html" id="buy-btn">buy</a>
+            </div>
+            <h1 id="header">The Estate</h1>
+        </nav>
+    </header>
+
+    <!-- Background image container -->
+    <div class="bg-image-container">
+        <div class="bg-image"></div>
+    </div>
+
+    <!-- Form for posting an ad -->
+    <div class="box">
+        <div class="form">
+            <h2 id="heading">Post your Ad</h2>
+            <form id="userForm">
+                <!-- Form fields -->
+                <div class="inputbox">
+                    <input type="text" id="name" placeholder="Name" required>
+                </div>
+                <div class="inputbox">
+                    <input type="email" id="email" placeholder="E-mail" required>
+                </div>
+                <div class="inputbox">
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="address" placeholder="Address" required>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="details" placeholder="Details" required>
+                </div>
+                <div class="inputbox">
+                    <input type="number" id="price" placeholder="Price" required>
+                </div>
+                <div class="inputbox">
+                    <input type="file" id="photos" accept="image/*" multiple required>
+                </div>
+                <input type="submit" value="Submit" class="sub" id="submit">
+            </form>
+            <div id="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Loader for indicating submission process -->
+    <div id="loader" style="display: none;"></div>
+
+    <!-- Firebase SDK imports -->
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxzBB_RKFRVRPTunIFy_qUNGRVTpHHPrc",
+            authDomain: "the-estate-59b23.firebaseapp.com",
+            projectId: "the-estate-59b23",
+            storageBucket: "the-estate-59b23.appspot.com",
+            messagingSenderId: "477231912374",
+            appId: "1:477231912374:web:f7c9ecdd1777c576a65d17"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const storage = getStorage(app);
+        const auth = getAuth(app); // Get the Auth instance
+
+        // DOM elements
+        const userForm = document.getElementById('userForm');
+        const errorMessage = document.getElementById('error-message');
+        const loader = document.getElementById('loader');
+
+        // Form submit event listener
+        userForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            loader.style.display = 'block';
+
+            // Get current user UID
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                showError("User not authenticated.");
+                loader.style.display = 'none';
+                return;
+            }
+
+            const uid = currentUser.uid;
+
+            // Get form values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const details = document.getElementById("details").value.trim();
+            const price = document.getElementById("price").value.trim();
+            const photos = document.getElementById("photos").files;
+
+            // Validate phone number (must be numeric)
+            if (!/^\d+$/.test(phone)) {
+                showError("Please enter a valid phone number");
+                loader.style.display = 'none';
+                return;
+            }
+
+            try {
+                // Proceed with ad posting
+                const userData = {
+                    uid,
+                    name,
+                    email,
+                    phone,
+                    address,
+                    details,
+                    price,
+                    photoURLs: [] // Array to store photo URLs
+                };
+
+                // Upload photos to Firebase Storage and get download URLs
+                await Promise.all([...photos].map(async (photo, i) => {
+                    const photoRef = storageRef(storage, `photos/${name}_${Date.now()}_${i}`);
+                    const snapshot = await uploadBytes(photoRef, photo);
+                    const downloadURL = await getDownloadURL(snapshot.ref);
+                    userData.photoURLs.push(downloadURL); // Store download URL in userData
+                }));
+
+                // Save userData to Firebase Realtime Database with 'approved' field set to false
+                const newUserDataRef = push(ref(db, 'users'));
+                const adData = { ...userData, approved: false };
+                await set(newUserDataRef, adData);
+
+                // Reset form and show pending message
+                userForm.reset();
+                alert("Your Ad is pending approval");
+
+                // Hide loader
+                loader.style.display = 'none';
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                showError("An error occurred. Please try again later.");
+                loader.style.display = 'none';
+            }
+        });
+
+        // Function to display error message
+        function showError(message) {
+            errorMessage.textContent = message;
+        }
+    </script>
+</body>
+
+</html>

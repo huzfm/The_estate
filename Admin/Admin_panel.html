@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Pending Ads</title>
+    <link rel="stylesheet" href="Admin_panel.css">
+
+    <style>
+      
+      /* Reset box-sizing and apply base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    position: relative; /* Ensure relative position for logout button positioning */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Carousel styles */
+.carousel {
+    max-width: 600px;
+    margin: 0 auto 20px; /* Center horizontally with bottom margin */
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    overflow: hidden;
+}
+
+.slide img {
+    width: 100%; /* Adjusted to fill the slide width */
+    height: 500px;
+    display: block; /* Display block to remove extra space */
+    border-radius: 5px;
+    object-fit: cover; /* Ensures images fill the container */
+}
+
+/* Controls styles */
+.controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.control {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.control:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Info section styles */
+.info-section {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.info-section h3 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.info-section p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Buttons section styles */
+.buttons-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.approve-button,
+.disapprove-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.approve-button:hover,
+.disapprove-button:hover {
+    background-color: #45a049;
+}
+
+/* Horizontal rule styles */
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .carousel {
+        max-width: 100%; /* Full width on smaller screens */
+    }
+    .buttons-section {
+        flex-direction: column;
+        align-items: center;
+    }
+    .approve-button,
+    .disapprove-button {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    max-height: 80%;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Logout button styles */
+.logout-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    z-index: 1001;
+}
+
+.logout-button:hover {
+    background-color: #d32f2f;
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Logout button -->
+    <button id="logoutButton" class="logout-button">Logout</button>
+
+    <h1>Admin Panel - Pending Ads</h1>
+
+    <div id="adsList" class="ads-list"></div>
+
+    <!-- Modal for full-sized image display -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImg">
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase configuration (replace with your Firebase config)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        import { getDatabase, ref, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"; // Import Firebase Auth module
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxzBB_RKFRVRPTunIFy_qUNGRVTpHHPrc",
+            authDomain: "the-estate-59b23.firebaseapp.com",
+            projectId: "the-estate-59b23",
+            storageBucket: "the-estate-59b23.appspot.com",
+            messagingSenderId: "477231912374",
+            appId: "1:477231912374:web:f7c9ecdd1777c576a65d17"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app); // Initialize Auth
+
+        // DOM element
+        const adsList = document.getElementById('adsList');
+
+        // Function to fetch and display pending ads
+        const displayPendingAds = () => {
+            const adsRef = ref(db, 'users');
+            onValue(adsRef, (snapshot) => {
+                adsList.innerHTML = ''; // Clear previous ads
+                const ads = snapshot.val();
+                for (let key in ads) {
+                    if (!ads[key].approved && !ads[key].disapproved) { // Check both approved and disapproved flags
+                        const ad = ads[key];
+                        const adElement = document.createElement('div');
+                        adElement.classList.add('carousel'); // Add carousel class to each ad container
+
+                        // Create slides container
+                        const slidesContainer = document.createElement('div');
+                        slidesContainer.classList.add('slides');
+
+                        // Add slides (photos) to the slides container
+                        if (ad.photoURLs && ad.photoURLs.length > 0) {
+                            ad.photoURLs.forEach((photoURL, index) => {
+                                const slide = document.createElement('div');
+                                slide.classList.add('slide');
+                                slide.innerHTML = `<img src="${photoURL}" alt="Ad Photo" data-index="${index}">`;
+                                slidesContainer.appendChild(slide);
+                            });
+                        } else {
+                            slidesContainer.innerHTML = '<p>No photos available</p>';
+                        }
+
+                        // Add info section
+                        const infoSection = document.createElement('div');
+                        infoSection.classList.add('info-section');
+                        infoSection.innerHTML = `
+                            <h3>${ad.name}</h3>
+                            <p>Email: ${ad.email}</p>
+                            <p>Phone: ${ad.phone}</p>
+                            <p>Address: ${ad.address}</p>
+                            <p>Details: ${ad.details}</p>
+                            <p>Price: ${ad.price}</p>
+                        `;
+
+                        // Add controls (buttons)
+                        const controls = document.createElement('div');
+                        controls.classList.add('controls');
+                        controls.innerHTML = `
+                            <button class="control prevButton">&#10094; Prev</button>
+                            <button class="control nextButton">Next &#10095;</button>
+                        `;
+
+                        // Add buttons section
+                        const buttonsSection = document.createElement('div');
+                        buttonsSection.classList.add('buttons-section');
+                        buttonsSection.innerHTML = `
+                            <button class="approve-button" data-ad-key="${key}">Approve</button>
+                            <button class="disapprove-button" data-ad-key="${key}">Disapprove</button>
+                        `;
+
+                        // Append all elements to adElement
+                        adElement.appendChild(slidesContainer);
+                        adElement.appendChild(infoSection);
+                        adElement.appendChild(controls);
+                        adElement.appendChild(buttonsSection);
+                        adElement.innerHTML += '<hr>';
+
+                        // Append adElement to adsList
+                        adsList.appendChild(adElement);
+                    }
+                }
+
+                // Attach event listeners to approve buttons
+                const approveButtons = document.querySelectorAll('.approve-button');
+                approveButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const adKey = button.getAttribute('data-ad-key');
+                        approveAd(adKey);
+                    });
+                });
+
+                // Attach event listeners to disapprove buttons
+                const disapproveButtons = document.querySelectorAll('.disapprove-button');
+                disapproveButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const adKey = button.getAttribute('data-ad-key');
+                        disapproveAd(adKey);
+                    });
+                });
+
+                // Initialize carousel functionality for each ad
+                initializeCarousel();
+            });
+        };
+
+        // Function to initialize carousel functionality
+        const initializeCarousel = () => {
+            const carousels = document.querySelectorAll('.carousel');
+            carousels.forEach(carousel => {
+                const slides = carousel.querySelector('.slides');
+                const prevButton = carousel.querySelector('.prevButton');
+                const nextButton = carousel.querySelector('.nextButton');
+                let slideIndex = 0;
+
+                // Function to show slides
+                const showSlides = () => {
+                    const totalSlides = slides.children.length;
+                    if (slideIndex >= totalSlides) {
+                        slideIndex = 0;
+                    }
+                    if (slideIndex < 0) {
+                        slideIndex = totalSlides - 1;
+                    }
+                    slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+                };
+
+                // Next slide button click event
+                nextButton.addEventListener('click', () => {
+                    slideIndex++;
+                    showSlides();
+                });
+
+                // Previous slide button click event
+                prevButton.addEventListener('click', () => {
+                    slideIndex--;
+                    showSlides();
+                });
+
+                // Automatic slide change (optional)
+                // setInterval(() => {
+                //     slideIndex++;
+                //     showSlides();
+                // }, 3000); // Change slide every 3 seconds
+            });
+        };
+
+        // Function to approve an ad
+        const approveAd = async (adKey) => {
+            await update(ref(db, `users/${adKey}`), { approved: true });
+            alert('Ad approved successfully!');
+        };
+
+        // Function to disapprove an ad
+        const disapproveAd = async (adKey) => {
+            await update(ref(db, `users/${adKey}`), { disapproved: true });
+            await remove(ref(db, `users/${adKey}`)); // Remove the ad data from the database
+            alert('Ad disapproved and deleted successfully!');
+        };
+
+        // Logout button click event
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+                console.log('User signed out successfully.');
+                // Redirect or handle as needed
+                window.location.href = '../index.html'
+            }).catch((error) => {
+                // An error happened.
+                console.error('Sign out error:', error);
+            });
+        });
+
+        // Call function to display pending ads
+        displayPendingAds();
+    </script>
+
+    <!-- Firebase SDK modules -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js"></script>
+
+</body>
+
+</html>

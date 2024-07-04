@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Approved Ads</title>
+      <link rel="stylesheet" href="fetchDB.css">
+      <style>
+            @media only screen and (max-width: 500px) {
+                  nav {
+                        position: relative;
+                        right: -150px;
+                  }
+            }
+            
+      </style>
+</head>
+
+<body>
+      <header>
+            <h1 id="main-heading">The Estate</h1>
+
+            <section id="header-container">
+
+                  <nav>
+                        <a href="./my_Ads.html" id="nav-items" target="_blank">My Ads</a>
+                        <a href="ad_post.html" id="nav-items" target="_blank">Sell</a>
+                        <button id="logout-button">Logout</button>
+                  </nav>
+            </section>
+      </header>
+      <div class="preloader"></div>
+
+      <div id="user-container" class="container"></div>
+
+      <!-- The modal -->
+      <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+      </div>
+
+      <script type="module">
+            // Firebase modules
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+            import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+            import { getStorage } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js";
+            import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+
+            // Firebase configuration
+            const firebaseConfig = {
+                  apiKey: "AIzaSyDxzBB_RKFRVRPTunIFy_qUNGRVTpHHPrc",
+                  authDomain: "the-estate-59b23.firebaseapp.com",
+                  projectId: "the-estate-59b23",
+                  storageBucket: "the-estate-59b23.appspot.com",
+                  messagingSenderId: "477231912374",
+                  appId: "1:477231912374:web:f7c9ecdd1777c576a65d17"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            const userRef = ref(db, 'users'); // Reference to your user data
+            const storage = getStorage(app);
+            const auth = getAuth(app);
+
+            // DOM elements
+            const userContainer = document.getElementById('user-container');
+            const preloader = document.querySelector('.preloader');
+
+            // Function to display approved ads
+            function displayApprovedAds() {
+                  onValue(userRef, (snapshot) => {
+                        const data = snapshot.val();
+                        console.log(data) // Check the data retrieved
+                        if (data) {
+                              userContainer.innerHTML = ''; // Clear previous data before appending new data
+                              Object.keys(data).forEach(userId => {
+                                    const userData = data[userId];
+                                    console.log(userData.uid)
+                                    if (userData.approved) { // Check if the ad is approved
+                                          // Create elements for user info
+                                          const userDiv = document.createElement('div');
+                                          userDiv.classList.add('user-info');
+
+                                          // Handle photo URLs if available
+                                          if (userData.photoURLs && userData.photoURLs.length > 0) {
+                                                const photoContainer = document.createElement('div');
+                                                photoContainer.classList.add('photo-container');
+                                                const slideContainer = document.createElement('div');
+                                                slideContainer.classList.add('slide-container');
+                                                userData.photoURLs.forEach((photoURL, index) => {
+                                                      const img = document.createElement('img');
+                                                      img.src = photoURL;
+                                                      img.setAttribute('data-index', index); // Add data-index attribute
+                                                      slideContainer.appendChild(img);
+                                                });
+                                                photoContainer.appendChild(slideContainer);
+
+                                                // Add previous and next buttons for carousel
+                                                const prevButton = document.createElement('a');
+                                                prevButton.classList.add('prev');
+                                                prevButton.textContent = '❮';
+                                                photoContainer.appendChild(prevButton);
+
+                                                const nextButton = document.createElement('a');
+                                                nextButton.classList.add('next');
+                                                nextButton.textContent = '❯';
+                                                photoContainer.appendChild(nextButton);
+
+                                                userDiv.appendChild(photoContainer);
+
+                                                // Function to handle carousel navigation
+                                                let slideIndex = 0;
+                                                const slides = slideContainer.querySelectorAll('img');
+
+                                                const showSlides = () => {
+                                                      if (slideIndex >= slides.length) {
+                                                            slideIndex = 0;
+                                                      } else if (slideIndex < 0) {
+                                                            slideIndex = slides.length - 1;
+                                                      }
+                                                      slideContainer.style.transform = `translateX(${-slideIndex * 100}%)`;
+                                                };
+
+                                                // Event listeners for previous and next buttons
+                                                prevButton.addEventListener('click', () => {
+                                                      slideIndex--;
+                                                      showSlides();
+                                                });
+
+                                                nextButton.addEventListener('click', () => {
+                                                      slideIndex++;
+                                                      showSlides();
+                                                });
+
+                                                // Event listener to open modal on image click
+                                                slides.forEach(slide => {
+                                                      slide.addEventListener('click', () => {
+                                                            const modal = document.getElementById('myModal');
+                                                            const modalImg = document.getElementById("img01");
+                                                            modal.style.display = "block";
+                                                            modalImg.src = slide.src;
+                                                      });
+                                                });
+                                          }
+
+                                          // Add user details
+                                          const userDetails = document.createElement('div');
+                                          userDetails.classList.add('user-details');
+                                          userDetails.style.display = 'none'; // Hide details initially
+                                          userDetails.innerHTML = `
+                        <p><strong>Name:</strong> ${userData.name}</p>
+                        <p><strong>Email:</strong> ${userData.email}</p>
+                        <p><strong>Phone:</strong> +91 ${userData.phone ? userData.phone : "Not Available"}</p>
+                        <p><strong>Address:</strong> ${userData.address}</p>
+                        <p><strong>Details:</strong> ${userData.details}</p>
+                        <p><strong>Price:</strong> ${userData.price} INR</p>
+                        <p><strong>UID:</strong> ${userData.uid}</p>
+                      `;
+                                          userDiv.appendChild(userDetails);
+
+                                          // Add "Read More" link
+                                          const readMoreLink = document.createElement('button');
+                                          readMoreLink.classList.add('read-more');
+                                          readMoreLink.textContent = 'View Details';
+                                          userDiv.appendChild(readMoreLink);
+
+                                          userContainer.appendChild(userDiv);
+                                          preloader.style.display = 'none'; // Hide preloader
+
+                                          // Event listener for "Read More" link
+                                          readMoreLink.addEventListener('click', (event) => {
+                                                event.preventDefault();
+                                                if (userDetails.style.display === 'none') {
+                                                      userDetails.style.display = 'block';
+                                                      readMoreLink.textContent = 'Read Less';
+                                                } else {
+                                                      userDetails.style.display = 'none';
+                                                      readMoreLink.textContent = 'View Details';
+                                                }
+                                          });
+                                    }
+                              });
+                        } else {
+                              userContainer.innerHTML = '<p>No approved ads found</p>';
+                              preloader.style.display = 'none'; // Hide preloader
+                        }
+                  }, (error) => {
+                        console.error('Error fetching data:', error);
+                        userContainer.innerHTML = '<p>Error fetching data</p>';
+                        preloader.style.display = 'none'; // Hide preloader
+                  });
+            }
+
+            // Function to handle logout
+            function logout() {
+                  signOut(auth)
+                        .then(() => {
+                              // Sign-out successful.
+                              console.log("User signed out successfully.");
+                              window.location.href = "../index.html";
+                        })
+                        .catch((error) => {
+                              // An error happened.
+                              console.error('Error signing out:', error);
+                        });
+            }
+
+            // Reload the page state when navigating back
+            window.history.replaceState(null, "", window.location.href);
+
+            // Add event listener to logout button
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                  logoutButton.addEventListener('click', () => {
+                        logout();
+                  });
+            } else {
+                  console.error("Logout button not found.");
+            }
+
+            // Add event listener to close button in modal
+            const closeButton = document.querySelector('.close');
+            if (closeButton) {
+                  closeButton.addEventListener('click', () => {
+                        const modal = document.getElementById('myModal');
+                        modal.style.display = "none";
+                  });
+            } else {
+                  console.error("Close button not found.");
+            }
+
+            // Initialize display of approved ads
+            displayApprovedAds();
+
+      </script>
+
+</body>
+
+</html>

@@ -13,7 +13,6 @@
                         right: -150px;
                   }
             }
-            
       </style>
 </head>
 
@@ -122,6 +121,26 @@
                                                       }
                                                       slideContainer.style.transform = `translateX(${-slideIndex * 100}%)`;
                                                 };
+                                                let slideInterval;
+
+                                                const startAutoSlide = () => {
+                                                      slideInterval = setInterval(() => {
+                                                            slideIndex++;
+                                                            showSlides();
+                                                      }, 3000); // Change slide interval as needed (in milliseconds)
+                                                };
+
+                                                // Start auto sliding on page load
+                                                startAutoSlide();
+
+                                                // Stop auto sliding on user interaction
+                                                userDiv.addEventListener('mouseover', () => {
+                                                      clearInterval(slideInterval);
+                                                });
+
+                                                userDiv.addEventListener('mouseout', () => {
+                                                      startAutoSlide();
+                                                });
 
                                                 // Event listeners for previous and next buttons
                                                 prevButton.addEventListener('click', () => {
@@ -151,12 +170,11 @@
                                           userDetails.style.display = 'none'; // Hide details initially
                                           userDetails.innerHTML = `
                         <p><strong>Name:</strong> ${userData.name}</p>
-                        <p><strong>Email:</strong> ${userData.email}</p>
                         <p><strong>Phone:</strong> +91 ${userData.phone ? userData.phone : "Not Available"}</p>
                         <p><strong>Address:</strong> ${userData.address}</p>
                         <p><strong>Details:</strong> ${userData.details}</p>
                         <p><strong>Price:</strong> ${userData.price} INR</p>
-                        <p><strong>UID:</strong> ${userData.uid}</p>
+                        
                       `;
                                           userDiv.appendChild(userDetails);
 

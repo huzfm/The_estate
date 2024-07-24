@@ -497,6 +497,7 @@ nav ul li a:hover{
     color: #6663e9;
     font-size: 20px;
     font-weight: 800;
+
 }
 
 .card-details button {
@@ -507,6 +508,8 @@ nav ul li a:hover{
     color: #ffffff;
     font-weight: 800;
     font-size: 18px;
+    position: relative;
+    left: -100px;
 }
 
 .card1 {
@@ -534,6 +537,7 @@ footer {
     flex-direction: column; 
  align-items: center;
     padding: 50px 0px; 
+    background-color: rgb(36, 36, 75);
 }
 
 .footer-main {
@@ -543,11 +547,17 @@ footer {
     justify-content: space-between;
 }
 
+#find{
+    
+    color: white;
+    font-size: 20px;
+}
 .footer-left {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 30px;
     width: 40%;
+    font-size:50px ;
 }
 
 .footer-left > img {
@@ -557,6 +567,16 @@ footer {
 .social {
     display: flex;
     gap: 20px;
+}
+#contact1{
+    font-size: 20px;
+    color: white;
+
+}
+#contact2{
+    font-weight: bolder;
+    font-size: 20px;
+    color: white;
 }
 
 .social img {
@@ -578,7 +598,7 @@ footer {
 
 .footer-links ul {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
 }
 
@@ -669,32 +689,9 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Card and button styles */
-.card {
-    /* Your card styles */
-    /* Example: */
-    /*
-     width: 200px;
-    height: 300px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-}
 
-.button {
-    /* Your button styles */
-    /* Example: */
-    /* padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer; */
-}
+
+
 .menu-toggle {
     z-index: 999;
 }

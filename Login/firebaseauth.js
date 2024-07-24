@@ -74,7 +74,7 @@ signIn.addEventListener('click', (event) => {
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            showMessage('login is successful', 'signInMessage');
+            // showMessage('login is successful', 'signInMessage');
             const user = userCredential.user;
             localStorage.setItem('loggedInUserId', user.uid);
             window.location.href = '../Ads/fetchDB.html';

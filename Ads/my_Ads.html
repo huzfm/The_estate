@@ -32,18 +32,19 @@
             <form id="editForm">
                 <label for="editName">Name:</label>
                 <input type="text" id="editName" name="editName" required><br>
-                <label for="editEmail">Email:</label>
-                <input type="email" id="editEmail" name="editEmail" required><br>
+                <!-- <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" name="editEmail" required><br> -->
                 <label for="editPhone">Phone:</label>
-                <input type="text" id="editPhone" name="editPhone"><br>
+                <input type="text" id="editPhone" name="editPhone" required maxlength="10" minlength="10"
+                    type="number"><br>
                 <label for="editAddress">Address:</label>
-                <input type="text" id="editAddress" name="editAddress"><br>
+                <input type="text" id="editAddress" name="editAddress" required><br>
                 <label for="editDetails">Details:</label><br>
-                <textarea id="editDetails" name="editDetails" rows="4" cols="40"></textarea><br>
+                <textarea id="editDetails" name="editDetails" rows="4" cols="40" required></textarea><br>
                 <label for="editPrice">Price:</label>
-                <input type="number" id="editPrice" name="editPrice" required><br>
-              
-               
+                <input type="tel" id="editPrice" name="editPrice" required maxlength="10" type="number"><br>
+
+
                 <div id="currentPhotosContainer">
                     <!-- Current photos will be displayed here -->
                 </div>
@@ -109,7 +110,7 @@
                         userDetails.classList.add('user-details');
                         userDetails.innerHTML = `
                             <p><strong>Name:</strong> ${userData.name}</p>
-                            <p><strong>Email:</strong> ${userData.email}</p>
+                            
                             <p><strong>Phone:</strong> ${userData.phone ? userData.phone : 'Not Available'}</p>
                             <p><strong>Address:</strong> ${userData.address ? userData.address : 'Not Available'}</p>
                             <p><strong>Details:</strong> ${userData.details ? userData.details : 'Not Available'}</p>
@@ -139,7 +140,7 @@
                 });
 
                 if (userContainer.innerHTML === '') {
-                    userContainer.innerHTML = '<p>No data found</p>';
+                    userContainer.innerHTML = '<p>No Ads found</p>';
                 }
             }, (error) => {
                 console.error('Error fetching user data:', error);
@@ -150,7 +151,7 @@
         // Function to populate edit form with existing data
         function populateEditForm(userId, userData) {
             document.getElementById('editName').value = userData.name;
-            document.getElementById('editEmail').value = userData.email;
+
             document.getElementById('editPhone').value = userData.phone || '';
             document.getElementById('editAddress').value = userData.address || '';
             document.getElementById('editDetails').value = userData.details || '';
@@ -187,7 +188,7 @@
             editForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const newName = editForm.editName.value;
-                const newEmail = editForm.editEmail.value;
+
                 const newPhone = editForm.editPhone.value;
                 const newAddress = editForm.editAddress.value;
                 const newDetails = editForm.editDetails.value;
@@ -201,12 +202,12 @@
                     // Update user data in Firebase
                     await update(userRef, {
                         name: newName,
-                        email: newEmail,
+
                         phone: newPhone,
                         address: newAddress,
                         details: newDetails,
                         price: newPrice,
-                        approved:false
+                        approved: false
                     });
 
                     // Display success message
@@ -268,7 +269,7 @@
             logoutButton.addEventListener('click', () => {
                 signOut(auth).then(() => {
                     console.log('User signed out');
-                    window.location.href = 'index.html'; // Redirect to login page after logout
+                    window.location.href = '../index.html'; // Redirect to login page after logout
                 }).catch((error) => {
                     console.error('Sign out error:', error);
                     alert('Error signing out. Please try again.');
@@ -284,7 +285,7 @@
                 displayUserData(user.uid);
             } else {
                 console.log('No user signed in.');
-                window.location.href = 'index.html'; // Redirect to login page if no user is signed in
+                window.location.href = '../login.html'; // Redirect to login page if no user is signed in
             }
         });
     </script>

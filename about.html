@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="./Assets/style.css">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+            rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Give+You+Glory&family=Kalam:wght@300;400;700&family=Shadows+Into+Light+Two&display=swap"
+            rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet" href="about.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+      <style>
+            .para {
+                  padding-top: 20px;
+                  margin-top: 50px;
+                  backdrop-filter: blur(8px);
+                  /* Adjust the blur intensity as needed */
+                  background-color: rgba(255, 255, 255, 0.5);
+                  /* Adjust the background color and transparency */
+                  padding: 20px;
+                  /* Optional padding to make the effect more visible */
+                  border-radius: 10px;
+                  /* Optional: rounded corners for the container */
+            }
+
+            /* Hide dropdown content by default */
+            .dropdown-content {
+                  display: none;
+                  position: absolute;
+                  background-color: #f9f9f9;
+                  min-width: 100px;
+                  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                  z-index: 1;
+            }
+
+            .dropdown {
+                  background-color: transparent;
+            }
+
+            /* Position the dropdown container */
+            .dropdown:hover .dropdown-content,
+            .dropdown:focus .dropdown-content {
+                  display: block;
+                  /* Show dropdown content when hovering or focused */
+            }
+
+            /* Style dropdown links */
+            .dropdown-content a {
+                  color: #000000;
+                  padding: 12px 16px;
+                  text-decoration: none;
+                  display: block;
+            }
+
+            /* Change background color on hover */
+            .dropdown-content a:hover {
+                  background-color: #f1f1f1;
+            }
+
+            .text {
+                  font-size: 30px;
+                  line-height: 1.6;
+                  color: black;
+                  margin-top: 20px;
+                  background-color: transparent;
+
+            }
+      </style>
+      <header id="Home">
+            <div class="header-main">
+                  <!-- NAV -->
+                  <div class="nav-outer" data-aos="fade-down">
+                        <nav>
+                              <a href="#" id="name">The Estate</a>
+                              <div class="menu-toggle" onclick="toggleMenu()">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                              </div>
+                              <ul class="nav-items">
+                                    <li><a href="./index.html">Home</a></li>
+                                    <li><a href="#about-us" class="active">About</a></li>
+                                    <li><a href="#foot">Contact</a></li>
+                                    <li class="dropdown">
+                                          <a href="#" class="dropbtn">Login</a>
+                                          <div class="dropdown-content">
+                                                <a href="./Login/login.html">Login as User</a>
+                                                <a href="./Admin/Admin_login.html">Login as Admin</a>
+                                          </div>
+                                    </li>
+                              </ul>
+                        </nav>
+                        <div class="nav-line"></div>
+
+                        <div class="para">
+                              <p class="text">
+                                    Welcome to the Estate, your premium choice for comprehensive real estate management
+                                    services. We are dedicated to transforming the complexities of property management
+                                    into seamless and rewarding experiences for our clients. Whether you own a single
+                                    property or a vast portfolio, our team is here to help you navigate the dynamic
+                                    world of real estate with confidence and ease.
+                                    At the Estate, our mission is to elevate the standards of real estate management by
+                                    providing innovative, efficient, and reliable services
+                                    At the Estate , we offer a focused range of services designed to meet your
+                                    advertising needs
+                                    <br>
+                                    Posting Ads: We create and post compelling advertisements for your properties
+                                    <br>
+                                    Editing Ads: Need to update your listing with new information You can
+                                    handle all edits promptly, keeping your ads current and appealing.
+                                    <br>
+                                    Deleting Ads: When your property is sold, we can remove the
+                                    advertisements, ensuring your listings are always accurate and up-to-date.
+                              </p>
+                        </div>
+                  </div>
+      </header>
+      <footer id="foot">
+            <div class="footer-main">
+                  <p id="find">Find us on</p>
+                  <div class="footer-left">
+
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-linkedin"></i>
+                  </div>
+                  <div class="footer-right">
+
+                        <div class="footer-links" id="abc">
+                              <ul>
+                                    <li><a href="#"></a></li>
+
+
+
+                                    <p id="contact1"><i class="fa-solid fa-phone">+91-8899966757</i></p>
+                                    <br>
+                                    <br>
+                                    <a id="contact2"><i class="fa-regular fa-envelope"> </i> thestate@gmail.com</a>
+                              </ul>
+                        </div>
+                  </div>
+            </div>
+      </footer>
+</body>
+
+</html>

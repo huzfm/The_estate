@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyDxzBB_RKFRVRPTunIFy_qUNGRVTpHHPrc",
@@ -15,7 +15,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Function to display messages with fading effect
 function showMessage(message, divId) {
     var messageDiv = document.getElementById(divId);
     messageDiv.style.display = "block";
@@ -25,18 +24,6 @@ function showMessage(message, divId) {
         messageDiv.style.opacity = 0;
     }, 5000);
 }
-
-// Function to show loader while processing
-function showLoader() {
-    document.getElementById('loader').style.display = 'block';
-}
-
-// Function to hide loader
-function hideLoader() {
-    document.getElementById('loader').style.display = 'none';
-}
-
-// Sign Up event listener
 const signUp = document.getElementById('submitSignUp');
 signUp.addEventListener('click', (event) => {
     event.preventDefault();
@@ -44,12 +31,9 @@ signUp.addEventListener('click', (event) => {
     const password = document.getElementById('rPassword').value;
     const firstName = document.getElementById('fName').value;
     const lastName = document.getElementById('lName').value;
-    const phone = document.getElementById('phone').value; // Added phone number field
 
     const auth = getAuth();
     const db = getFirestore();
-
-    showLoader(); // Show loader while processing
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -57,8 +41,7 @@ signUp.addEventListener('click', (event) => {
             const userData = {
                 email: email,
                 firstName: firstName,
-                lastName: lastName,
-                phone: phone // Include phone number in user data
+                lastName: lastName
             };
             showMessage('Account Created Successfully', 'signUpMessage');
             const docRef = doc(db, "users", user.uid);
@@ -67,22 +50,21 @@ signUp.addEventListener('click', (event) => {
                     window.location.href = 'login.html';
                 })
                 .catch((error) => {
-                    console.error("Error writing document", error);
-                    hideLoader(); // Hide loader on error
+                    console.error("error writing document", error);
+
                 });
         })
         .catch((error) => {
             const errorCode = error.code;
             if (errorCode == 'auth/email-already-in-use') {
                 showMessage('Email Address Already Exists !!!', 'signUpMessage');
-            } else {
-                showMessage('Unable to create User', 'signUpMessage');
             }
-            hideLoader(); // Hide loader on error
-        });
+            else {
+                showMessage('unable to create User', 'signUpMessage');
+            }
+        })
 });
 
-// Sign In event listener
 const signIn = document.getElementById('submitSignIn');
 signIn.addEventListener('click', (event) => {
     event.preventDefault();
@@ -90,11 +72,9 @@ signIn.addEventListener('click', (event) => {
     const password = document.getElementById('password').value;
     const auth = getAuth();
 
-    showLoader(); // Show loader while processing
-
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            showMessage('Login successful', 'signInMessage');
+            showMessage('login is successful', 'signInMessage');
             const user = userCredential.user;
             localStorage.setItem('loggedInUserId', user.uid);
             window.location.href = '../Ads/fetchDB.html';
@@ -103,14 +83,11 @@ signIn.addEventListener('click', (event) => {
             const errorCode = error.code;
             if (errorCode === 'auth/invalid-credential') {
                 showMessage('Incorrect Email or Password', 'signInMessage');
-            } else {
+            }
+            else {
                 showMessage('Account does not Exist', 'signInMessage');
             }
-            hideLoader(); // Hide loader on error
-        });
-});
+        })
+})
 
-// Hide loader initially
-document.addEventListener("DOMContentLoaded", function () {
-    hideLoader();
-});
+// Show loader

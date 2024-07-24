@@ -13,6 +13,7 @@
                         right: -150px;
                   }
             }
+            
       </style>
 </head>
 
@@ -21,6 +22,7 @@
             <h1 id="main-heading">The Estate</h1>
 
             <section id="header-container">
+
                   <nav>
                         <a href="./my_Ads.html" id="nav-items" target="_blank">My Ads</a>
                         <a href="ad_post.html" id="nav-items" target="_blank">Sell</a>
@@ -70,17 +72,13 @@
             function displayApprovedAds() {
                   onValue(userRef, (snapshot) => {
                         const data = snapshot.val();
-                        console.log(data); // Check the data retrieved
+                        console.log(data) // Check the data retrieved
                         if (data) {
                               userContainer.innerHTML = ''; // Clear previous data before appending new data
-                              let hasApprovedAds = false;
-
                               Object.keys(data).forEach(userId => {
                                     const userData = data[userId];
-                                    console.log(userData.uid);
+                                    console.log(userData.uid)
                                     if (userData.approved) { // Check if the ad is approved
-                                          hasApprovedAds = true;
-
                                           // Create elements for user info
                                           const userDiv = document.createElement('div');
                                           userDiv.classList.add('user-info');
@@ -152,24 +150,28 @@
                                           userDetails.classList.add('user-details');
                                           userDetails.style.display = 'none'; // Hide details initially
                                           userDetails.innerHTML = `
-                                <p><strong>Name:</strong> ${userData.name}</p>
-                                <p><strong>Email:</strong> ${userData.email}</p>
-                                <p><strong>Phone:</strong> +91 ${userData.phone ? userData.phone : "Not Available"}</p>
-                                <p><strong>Address:</strong> ${userData.address}</p>
-                                <p><strong>Details:</strong> ${userData.details}</p>
-                                <p><strong>Price:</strong> ${userData.price} INR</p>
-                                <p><strong>UID:</strong> ${userData.uid}</p>
-                            `;
+                        <p><strong>Name:</strong> ${userData.name}</p>
+                        <p><strong>Email:</strong> ${userData.email}</p>
+                        <p><strong>Phone:</strong> +91 ${userData.phone ? userData.phone : "Not Available"}</p>
+                        <p><strong>Address:</strong> ${userData.address}</p>
+                        <p><strong>Details:</strong> ${userData.details}</p>
+                        <p><strong>Price:</strong> ${userData.price} INR</p>
+                        <p><strong>UID:</strong> ${userData.uid}</p>
+                      `;
                                           userDiv.appendChild(userDetails);
 
-                                          // Add "View Details" button
+                                          // Add "Read More" link
                                           const readMoreLink = document.createElement('button');
                                           readMoreLink.classList.add('read-more');
                                           readMoreLink.textContent = 'View Details';
                                           userDiv.appendChild(readMoreLink);
 
-                                          // Toggle visibility of user details
-                                          readMoreLink.addEventListener('click', () => {
+                                          userContainer.appendChild(userDiv);
+                                          preloader.style.display = 'none'; // Hide preloader
+
+                                          // Event listener for "Read More" link
+                                          readMoreLink.addEventListener('click', (event) => {
+                                                event.preventDefault();
                                                 if (userDetails.style.display === 'none') {
                                                       userDetails.style.display = 'block';
                                                       readMoreLink.textContent = 'Read Less';
@@ -178,24 +180,16 @@
                                                       readMoreLink.textContent = 'View Details';
                                                 }
                                           });
-
-                                          userContainer.appendChild(userDiv);
                                     }
                               });
-
-                              if (!hasApprovedAds) {
-                                    userContainer.innerHTML = '<p>No approved ads found</p>';
-                              }
-
-                              preloader.style.display = 'none'; // Hide preloader after displaying ads or message
                         } else {
                               userContainer.innerHTML = '<p>No approved ads found</p>';
-                              preloader.style.display = 'none'; // Hide preloader if no data
+                              preloader.style.display = 'none'; // Hide preloader
                         }
                   }, (error) => {
                         console.error('Error fetching data:', error);
                         userContainer.innerHTML = '<p>Error fetching data</p>';
-                        preloader.style.display = 'none'; // Hide preloader on error
+                        preloader.style.display = 'none'; // Hide preloader
                   });
             }
 

@@ -72,43 +72,7 @@
       <button id="signUpButton">Sign Up</button>
     </div>
   </div>
-  <script>
-    // Function to toggle password visibility
-    // Wait for the DOM to be fully loaded before executing JavaScript
-    document.addEventListener("DOMContentLoaded", function () {
-      // Function to toggle password visibility
-      function togglePassword(inputId, iconId) {
-        const passwordField = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
 
-        if (passwordField.type === "password") {
-          passwordField.type = "text";
-          icon.classList.remove("fa-eye");
-          icon.classList.add("fa-eye-slash");
-        } else {
-          passwordField.type = "password";
-          icon.classList.remove("fa-eye-slash");
-          icon.classList.add("fa-eye");
-        }
-      }
-
-      // Event listeners for toggle password icons
-      const togglePasswordIcon = document.getElementById('togglePassword');
-      if (togglePasswordIcon) {
-        togglePasswordIcon.addEventListener('click', function () {
-          togglePassword('password', 'togglePassword');
-        });
-      }
-
-      const toggleRPasswordIcon = document.getElementById('toggleRPassword');
-      if (toggleRPasswordIcon) {
-        toggleRPasswordIcon.addEventListener('click', function () {
-          togglePassword('rPassword', 'toggleRPassword');
-        });
-      }
-    });
-
-  </script>
 
 </body>
 

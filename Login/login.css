@@ -187,4 +187,38 @@ button:hover{
     font-size: 0.9rem; /* Adjust button font size */
     padding: 8px 12px; /* Adjust button padding */
   }
+
+
+
+
+  @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        width: 95%;
+    }
+
+    .input-group input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .btn, .links button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-title {
+        font-size: 20px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+    }
+
+    .btn, .links button {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
       

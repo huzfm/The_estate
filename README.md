@@ -8,7 +8,7 @@ The Technology used is
   <li>JavaScript</LI>
   <li>Firebase</li>
 </ul>
-You can view the live application at <a href="https://thestate.netlify.app/." target=_blank>thestate</a>
+You can view the live application at <a href="https://thestate.netlify.app/." target="_blank">thestate</a>
 
 <h3>Installation</h3>
     <ol>

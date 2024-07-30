@@ -32,6 +32,16 @@ You can view the live application at <a href="https://thestate.netlify.app/." ta
         Made with ❤️ by <a href="https://github.com/huzfm" target="_blank" id="footer">Huzaif Mushtaq</a>
     </div>
     </footer>
-   ![image alt](https://github.com/huzfm/The_estate/blob/37362e0be4715fe946bfb136696e3df34e944b7b/Assets/Images/10.jpg)
-   
+    <h2>Screenshots</h2>
+    
+   ![Screenshot (86)](https://github.com/user-attachments/assets/f2cda714-a1c1-4ae4-b4c1-553cf5a5643c)
+
+  
+![Screenshot (87)](https://github.com/user-attachments/assets/d0cf9a94-d9e9-47ec-917e-d933ed9e4140)
+
+
+![Screenshot (88)](https://github.com/user-attachments/assets/c031a68b-1d56-4daa-9bf1-b1dc8cc5f65b)
+
+   ![Screenshot (93)](https://github.com/user-attachments/assets/789ca29a-b870-4585-b095-466bf2784dca)
+
 

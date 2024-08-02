@@ -756,7 +756,7 @@ footer {
 
 /* Basic Styles */
 #foot {
-    background-color: #f1f1f1; /* Example background color */
+    background-color: rgb(36, 36, 75); /* Example background color */
     padding: 20px;
     font-family: Arial, sans-serif;
 }

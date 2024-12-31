@@ -19,20 +19,10 @@ You can view the live application at <a href="https://thestate.netlify.app/." ta
             <pre><code>cd thestate</code></pre>
         </li>
     </ol>
-     <h2 id="contributing">Contributing</h2>
-    <p>We welcome contributions to improve the project. To contribute:</p>
-    <ol>
-        <li>Fork the repository.</li>
-        <li>Create a new branch for your feature or bugfix.</li>
-        <li>Commit your changes and push to your fork.</li>
-        <li>Open a Pull Request with a detailed description of your changes.</li>
-    </ol>
-    <footer>
-      <div class="message">
-        Made with ❤️ by <a href="https://github.com/huzfm" target="_blank" id="footer">Huzaif Mushtaq</a>
-    </div>
-    </footer>
-    <h2>Screenshots</h2>
+    <h2>SecreenShots</h2>
+    
+   
+ 
     
    ![Screenshot (86)](https://github.com/user-attachments/assets/f2cda714-a1c1-4ae4-b4c1-553cf5a5643c)
 
